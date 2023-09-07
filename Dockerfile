@@ -1,4 +1,4 @@
-FROM node:16
+FROM ubuntu
 RUN npm install -g pnpm
 COPY dashboard /dashboard
 WORKDIR /dashboard
