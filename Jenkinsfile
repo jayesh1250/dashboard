@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the GitHub repository
-                git 'https://github.com/jayesh1250/dashboard'
+                git branch: 'main', url: 'https://github.com/jayesh1250/dashboard'
             }
         }
 
