@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "react-app.fullname" . }}
+  namespace: react-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
