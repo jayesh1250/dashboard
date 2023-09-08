@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: {{ include "react-app.fullname" . }}
   namespace: {{ .Values.namespace.name }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: react.app.com # Replace with your domain
