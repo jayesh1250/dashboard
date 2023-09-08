@@ -3,9 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "react-app.fullname" . }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       app: react-app
