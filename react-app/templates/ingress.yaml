@@ -14,6 +14,6 @@ spec:
             path: /
             backend:
               service:
-                name: react-app-service
+                name: react-app
                 port:
                   number: 80
