@@ -22,17 +22,13 @@ pipeline  {
         stage('Push to AWS ECR') {
             steps {
                 script {
-                    // Define the Docker Hub credentials ID
-                    def dockerHubCredentialId = 'docker-cred'
-                    def dockerImageName = "jayesh1250/react-app:${BUILD_NUMBER}"
-
-                    // Authenticate with Docker Hub using the credentials
-                    withCredentials([usernamePassword(credentialsId: dockerHubCredentialId, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                        sh """
-                        docker login -u \${DOCKERHUB_USERNAME} -p \${DOCKERHUB_PASSWORD}
-                        docker tag react-app jayesh1250/react-app:\${BUILD_NUMBER}
-                        docker push ${dockerImageName}
-                        """
+                    def awsCredentialsId = 'aws_creds'
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialsId: awsCredentialsId]]) {
+                        sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/t1v7e2d8'
+                        sh "docker tag react-app public.ecr.aws/t1v7e2d8/react-application:latest"
+                        sh "docker tag react-app public.ecr.aws/t1v7e2d8/react-application:${BUILD_NUMBER}"
+                        sh "docker push public.ecr.aws/t1v7e2d8/react-application:latest"
+                        sh "docker push public.ecr.aws/t1v7e2d8/react-application:${BUILD_NUMBER}"
                     }
                 }
             }
