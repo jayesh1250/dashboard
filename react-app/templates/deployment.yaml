@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "react-app.fullname" . }}
+  name: react-app
   namespace: {{ .Values.namespace.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -14,10 +14,8 @@ spec:
         app: react-app
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: react-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 3000
-              protocol: TCP
+          - containerPort: 3000
