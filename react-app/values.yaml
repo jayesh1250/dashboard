@@ -5,7 +5,7 @@
 namespace:
   name: react-app
   
-replicaCount: 5
+replicaCount: 1
 
 image:
   repository: jayesh1250/react-app
