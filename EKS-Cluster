@@ -1,0 +1,51 @@
+1.INSTALL AWS CLI
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  sudo apt install unzip -y
+  unzip awscliv2.zip
+  sudo ./aws/install
+
+2.CONFIGURE AWS CLI
+  AWS Access Key ID [None]:  
+  AWS Secret Access Key [None]: 
+  Default region name [None]: 
+  Default output format [None]: 
+
+3.INSTALL KUBECTL
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  chmod +x ./kubectl
+  mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+  echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+
+4.INSTALL EKSCTL
+  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  sudo mv /tmp/eksctl /usr/local/bin
+  eksctl version
+
+5.CREACTION OF EKS (Elastic kubernetes cluster) CLUSTER BY EKSCTL
+  eksctl create cluster --name=eks-react \
+                      --region=us-east-1 \
+                      --zones=us-east-1a,us-east-1b \
+                      --without-nodegroup
+                      
+  eksctl utils associate-iam-oidc-provider \
+    --region us-east-1 \
+    --cluster eks-react  \
+    --approve
+
+  eksctl create nodegroup --cluster=eks-react \
+                       --region=us-east-1 \
+                       --name=eks-worker-nodes \
+                       --node-type=t2.medium \
+                       --nodes=2 \
+                       --nodes-min=2 \
+                       --nodes-max=3 \
+                       --node-volume-size=20 \
+                       --ssh-access \
+                       --ssh-public-key=NVirginia\
+                       --managed \
+                       --asg-access \
+                       --external-dns-access \
+                       --full-ecr-access \
+                       --appmesh-access \
+                       --alb-ingress-access
+
