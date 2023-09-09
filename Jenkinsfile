@@ -19,7 +19,7 @@ pipeline  {
                     }
                 }
             }
-        stage('Push to AWS ECR') {
+        stage('Push to DockerHub') {
             steps {
                 script {
                     // Define the Docker Hub credentials ID
