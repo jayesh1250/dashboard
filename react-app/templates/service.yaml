@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace.name }}
 spec:
   selector:
-    app: react-app
+    app: react-app-service
   ports:
     - protocol: TCP
       port: 80
