@@ -2,11 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: react-app-ingress
-  namespace: {{ .Values.namespace.name }}
+  labels:
+    app.kubernetes.io/name: react-app
+    app.kubernetes.io/managed-by: Helm
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: instance
+    meta.helm.sh/release-name: react-app
+    meta.helm.sh/release-namespace: react-app
 spec:
   rules:
     - host: react.local 
