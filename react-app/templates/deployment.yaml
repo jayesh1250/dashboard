@@ -2,7 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-app
-  namespace: {{ .Values.namespace.name }}
+  labels:
+    app.kubernetes.io/name: react-app
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: react-app
+    meta.helm.sh/release-namespace: react-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
